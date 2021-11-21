@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TARGETS: "src\\ExcelFinancialFunctions;tests\\ExcelFinancialFunctions_Tests"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+      - name: Restore dependencies
+        run: dotnet restore -target:$TARGETS
+      - name: Build and Test
+        run: dotnet test -target:$TARGETS /p:Configuration=Release --verbosity normal
+      - name: Pack
+        run: dotnet pack -target:$TARGETS /p:Configuration=Release /p:GitVersion=${GITHUB_REF#refs/tags/} /p:ReleaseNotes="${{ github.event.release.body }}" --no-build --verbosity normal
+      - name: Publish NuGets (if this version not published before)
+        run: dotnet nuget push **\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_ORG_TOKEN_2020 }} --skip-duplicate
