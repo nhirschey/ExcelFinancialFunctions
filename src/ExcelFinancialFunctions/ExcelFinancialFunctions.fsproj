@@ -14,6 +14,7 @@
     <PackageId>ExcelFinancialFunctions</PackageId>
     <Version>$(GitVersion)</Version>
     <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
+    <PackageReadmeFile>PackageReadmeFile.md</PackageReadmeFile>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>logo.png</PackageIcon>
     <PackageProjectUrl>http://fsprojects.github.io/ExcelFinancialFunctions</PackageProjectUrl>
@@ -35,6 +36,7 @@
     <Compile Include="testpreconditions.fs" />
     <Compile Include="wrapperdotnettype.fs" />
     <None Include="..\..\docs\files\img\logo.png" Pack="true" PackagePath="\"/>
+    <None Include="..\..\docs\PackageReadmeFile.md" Pack="true" PackagePath="\"/>    
   </ItemGroup>
 
 </Project>
